@@ -32,7 +32,7 @@ class iface {
             }
         }
 
-        ~fd() { if (_fd != -1) close(_fd);}
+        ~fd() { if (_fd != -1) close(_fd); }
 
         fd(fd&& o) { _fd = o._fd; o._fd = -1; }
         fd& operator=(fd&& o) { 
@@ -51,21 +51,21 @@ class iface {
     };
 
 public:
-    iface(mode mode, bool packet_info = true, size_t n_queues = 1);
-    iface(std::string name, mode mode, bool packet_info = true, size_t n_queues = 1);
+    inline iface(mode mode, bool packet_info = true, size_t n_queues = 1);
+    inline iface(std::string name, mode mode, bool packet_info = true, size_t n_queues = 1);
 
-    iface(iface&&) = default;
-    iface& operator=(iface&&) = default;
+    inline iface(iface&&) = default;
+    inline iface& operator=(iface&&) = default;
 
-    ~iface() = default;
+    inline ~iface() = default;
 
-    size_t read(void* buf, size_t n_bytes, size_t queue = 0) const;
+    inline size_t read(void* buf, size_t n_bytes, size_t queue = 0) const;
 
-    size_t write(const void* buf, size_t n_bytes, size_t queue = 0) const;
+    inline size_t write(const void* buf, size_t n_bytes, size_t queue = 0) const;
 
-    size_t get_n_queues() const noexcept { return _queues.size(); }
+    inline size_t get_n_queues() const noexcept { return _queues.size(); }
 
-    std::string_view get_name() const noexcept { return _name; } 
+    inline std::string_view get_name() const noexcept { return _name; } 
 
 private:
     iface(const iface&) = delete;
