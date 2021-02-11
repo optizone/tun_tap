@@ -6,15 +6,13 @@
 #include <stdexcept>
 #include <vector>
 
-#include <net/if.h>
-#include <linux/if_tun.h>
 #include <fcntl.h>
+#include <linux/if_tun.h>
 #include <memory.h>
+#include <net/if.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
 
-
-#include <iostream>
 
 namespace tun_tap {
 
@@ -32,15 +30,9 @@ class iface {
             if((_fd = open(name.data(), flags)) < 0) {
                 throw std::runtime_error("can't open "s + std::string { name });
             }
-            std::cout << "fd() _fd=" << _fd << '\n';
         }
 
-        ~fd() { 
-            std::cout << "~fd() _fd=" << _fd << '\n';
-            if (_fd != -1) {
-                close(_fd);
-            }
-        }
+        ~fd() { if (_fd != -1) close(_fd);}
 
         fd(fd&& o) { _fd = o._fd; o._fd = -1; }
         fd& operator=(fd&& o) { 
